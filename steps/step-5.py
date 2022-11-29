@@ -1,4 +1,4 @@
-"""User input"""
+"""Bad rotation"""
 
 import pygame
 from pygame.locals import *

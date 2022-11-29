@@ -1,4 +1,4 @@
-"""Bouncing"""
+"""Separate collision rect"""
 
 import pygame
 from pygame.locals import *
@@ -18,11 +18,14 @@ cookie_img = pygame.image.load("cookie.png").convert_alpha()
 x = 180
 y = 340
 
-cookie_x = 0
-cookie_y = 0
+cookie_x = 50
+cookie_y = 50
 cookie_x_vel = 5
 cookie_y_vel = 2
 cookie_rect = cookie_img.get_rect()
+rotated_cookie = cookie_img
+rotation = 0
+cookie_collision_rect = cookie_img.get_rect()
 
 running = True
 while running:
@@ -38,19 +41,27 @@ while running:
     if keys[K_RIGHT]:
         x += 4
 
+    cookie_rect = rotated_cookie.get_rect()
+
     cookie_x += cookie_x_vel
     cookie_y += cookie_y_vel
-    cookie_rect.x = cookie_x
-    cookie_rect.y = cookie_y
-    if cookie_rect.left < 0 or cookie_rect.right > WIDTH:
+    cookie_rect.centerx = cookie_x
+    cookie_rect.centery = cookie_y
+    cookie_collision_rect.center = cookie_rect.center
+    if cookie_collision_rect.left < 0 or cookie_collision_rect.right > WIDTH:
         cookie_x_vel = -cookie_x_vel
-    if cookie_rect.top < 0 or cookie_rect.bottom > HEIGHT:
+    if cookie_collision_rect.top < 0 or cookie_collision_rect.bottom > HEIGHT:
         cookie_y_vel = -cookie_y_vel
+
+    rotation += 5
+    rotated_cookie = pygame.transform.rotate(cookie_img, rotation)
 
     screen.fill((0, 0, 0))
 
-    screen.blit(cookie_img, (cookie_x, cookie_y))
+    screen.blit(rotated_cookie, cookie_rect)
     screen.blit(player_img, (x, y))
+    # pygame.draw.rect(screen, (255, 0, 0), cookie_rect, 2)
+    # pygame.draw.rect(screen, (0, 255, 0), cookie_collision_rect, 2)
 
     pygame.display.update()
 

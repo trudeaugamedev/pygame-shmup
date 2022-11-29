@@ -1,4 +1,4 @@
-"""User input"""
+"""Linking user input to movement"""
 
 import pygame
 from pygame.locals import *

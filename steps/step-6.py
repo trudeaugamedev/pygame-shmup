@@ -1,4 +1,4 @@
-"""User input"""
+"""Smooth rotation"""
 
 import pygame
 from pygame.locals import *
@@ -25,7 +25,6 @@ cookie_y_vel = 2
 cookie_rect = cookie_img.get_rect()
 rotated_cookie = cookie_img
 rotation = 0
-cookie_collision_rect = cookie_img.get_rect()
 
 running = True
 while running:
@@ -47,10 +46,9 @@ while running:
     cookie_y += cookie_y_vel
     cookie_rect.centerx = cookie_x
     cookie_rect.centery = cookie_y
-    cookie_collision_rect.center = cookie_rect.center
-    if cookie_collision_rect.left < 0 or cookie_collision_rect.right > WIDTH:
+    if cookie_rect.left < 0 or cookie_rect.right > WIDTH:
         cookie_x_vel = -cookie_x_vel
-    if cookie_collision_rect.top < 0 or cookie_collision_rect.bottom > HEIGHT:
+    if cookie_rect.top < 0 or cookie_rect.bottom > HEIGHT:
         cookie_y_vel = -cookie_y_vel
 
     rotation += 5
