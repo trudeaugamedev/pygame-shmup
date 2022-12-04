@@ -59,7 +59,6 @@ while running:
     screen.blit(rotated_cookie, cookie_rect)
     screen.blit(player_img, (x, y))
     # pygame.draw.rect(screen, (255, 0, 0), cookie_rect, 2)
-    # pygame.draw.rect(screen, (0, 255, 0), cookie_collision_rect, 2)
 
     pygame.display.update()
 
