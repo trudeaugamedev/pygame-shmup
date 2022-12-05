@@ -1,0 +1,1 @@
+"""Cookie class (code inside the class copied and modified)"""
