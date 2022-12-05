@@ -1,5 +1,6 @@
 """Separate collision rect"""
 
+import sys
 import pygame
 from pygame.locals import *
 from random import randint
@@ -13,10 +14,45 @@ pygame.display.set_caption("SHMUP!")
 clock = pygame.time.Clock()
 
 player_img = pygame.image.load("player.png").convert_alpha()
-player_img = pygame.transform.scale_by(player_img, 4) 
+player_img = pygame.transform.scale_by(player_img, 4)
 cookie_img = pygame.image.load("cookie.png").convert_alpha()
 bullet_img = pygame.image.load("bullet.png").convert_alpha()
 bullet_img = pygame.transform.scale_by(bullet_img, 4)
+bg_img = pygame.image.load("background.png").convert()
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.image = player_img
+        self.rect = player_img.get_rect()
+
+        self.x = 180
+        self.y = 340
+
+    def update(self):
+        keys = pygame.key.get_pressed()
+        if keys[K_LEFT]:
+            self.x -= 4
+        if keys[K_RIGHT]:
+            self.x += 4
+
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+        if self.rect.left < 0:
+            self.x = 0
+            self.rect.x = self.x
+        elif self.rect.right > WIDTH:
+            self.x = WIDTH - self.rect.width
+            self.rect.x = self.x
+
+        if pygame.sprite.spritecollide(self, cookies, False, pygame.sprite.collide_rect_ratio(0.8)):
+            pygame.quit()
+            sys.exit()
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
 
 class Cookie(pygame.sprite.Sprite):
     def __init__(self, x, y, x_vel, y_vel):
@@ -61,14 +97,11 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
-x = 180
-y = 340
-
 cookies = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
+player = Player()
 
-for _ in range(5):
-    Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
+spawn_rate = 60
 
 running = True
 while running:
@@ -79,27 +112,24 @@ while running:
             running = False
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
-                Bullet(x + player_img.get_width() / 2, y + 20)
+                Bullet(player.x + player_img.get_width() / 2, player.y - 10)
 
-    keys = pygame.key.get_pressed()
-    if keys[K_LEFT]:
-        x -= 4
-    if keys[K_RIGHT]:
-        x += 4
+    spawn_rate -= 0.01
+    if spawn_rate < 20:
+        spawn_rate = 20
+    if randint(0, int(spawn_rate)) == 0:
+        Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
         
     cookies.update()
     bullets.update()
+    player.update()
     pygame.sprite.groupcollide(bullets, cookies, True, True)
 
-    screen.fill((0, 0, 0))
+    screen.blit(bg_img, (0, 0))
 
     bullets.draw(screen)
     cookies.draw(screen)
-    screen.blit(player_img, (x, y))
-    # for cookie in cookies:
-    #     pygame.draw.rect(screen, (255, 0, 0), cookie.rect, 2)
-    # for bullet in bullets:
-    #     pygame.draw.rect(screen, (0, 255, 0), bullet.rect, 2)
+    player.draw(screen)
 
     pygame.display.update()
 
