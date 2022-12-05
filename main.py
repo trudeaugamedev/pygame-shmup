@@ -2,6 +2,7 @@
 
 import pygame
 from pygame.locals import *
+from random import randint
 
 FPS = 60
 WIDTH, HEIGHT = 400, 400
@@ -12,20 +13,62 @@ pygame.display.set_caption("SHMUP!")
 clock = pygame.time.Clock()
 
 player_img = pygame.image.load("player.png").convert_alpha()
-player_img = pygame.transform.scale_by(player_img, 4)
+player_img = pygame.transform.scale_by(player_img, 4) 
 cookie_img = pygame.image.load("cookie.png").convert_alpha()
+bullet_img = pygame.image.load("bullet.png").convert_alpha()
+bullet_img = pygame.transform.scale_by(bullet_img, 4)
+
+class Cookie(pygame.sprite.Sprite):
+    def __init__(self, x, y, x_vel, y_vel):
+        super().__init__(cookies)
+
+        self.image = cookie_img                 # Set the cookie's image to cookie image
+        self.rect = self.image.get_rect()       # Generate a rect from the image
+
+        self.x = x              # The x position of the cookie
+        self.y = y              # The y position of the cookie
+        self.x_vel = x_vel      # The x velocity (speed) of the cookie
+        self.y_vel = y_vel      # The y velocity (speed) of the cookie
+
+    def update(self):
+        self.x += self.x_vel    # Add the x velocity to the x position
+        self.y += self.y_vel    # Add the y velocity to the y position
+
+        self.rect.centerx = self.x      # Set the center x position of the rect to draw the image at to be x
+        self.rect.centery = self.y      # Set the center y position of the rect to draw the image at to be y
+
+        if self.rect.left < 0 or self.rect.right > WIDTH:   # If the left or right side of the rect is outside the window
+            self.x_vel = -self.x_vel                        # Reverse the x velocity (bounce)
+        if self.rect.top < 0 or self.rect.bottom > HEIGHT:  # If the top or bottom side of the rect is outside the window
+            self.y_vel = -self.y_vel                        # Reverse the y velocity (bounce)
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__(bullets)
+
+        self.image = bullet_img
+        self.rect = self.image.get_rect()
+
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.y -= 10
+
+        self.rect.centerx = self.x
+        self.rect.y = self.y
+
+        if self.rect.bottom < 0:
+            self.kill()
 
 x = 180
 y = 340
 
-cookie_x = 50
-cookie_y = 50
-cookie_x_vel = 5
-cookie_y_vel = 2
-cookie_rect = cookie_img.get_rect()
-rotated_cookie = cookie_img
-rotation = 0
-cookie_collision_rect = cookie_img.get_rect()
+cookies = pygame.sprite.Group()
+bullets = pygame.sprite.Group()
+
+for _ in range(5):
+    Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
 
 running = True
 while running:
@@ -34,32 +77,29 @@ while running:
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                Bullet(x + player_img.get_width() / 2, y + 20)
 
     keys = pygame.key.get_pressed()
     if keys[K_LEFT]:
         x -= 4
     if keys[K_RIGHT]:
         x += 4
-
-    cookie_rect = rotated_cookie.get_rect()
-
-    cookie_x += cookie_x_vel
-    cookie_y += cookie_y_vel
-    cookie_rect.centerx = cookie_x
-    cookie_rect.centery = cookie_y
-    cookie_collision_rect.center = cookie_rect.center
-    if cookie_collision_rect.left < 0 or cookie_collision_rect.right > WIDTH:
-        cookie_x_vel = -cookie_x_vel
-    if cookie_collision_rect.top < 0 or cookie_collision_rect.bottom > HEIGHT:
-        cookie_y_vel = -cookie_y_vel
-
-    rotation += 5
-    rotated_cookie = pygame.transform.rotate(cookie_img, rotation)
+        
+    cookies.update()
+    bullets.update()
+    pygame.sprite.groupcollide(bullets, cookies, True, True)
 
     screen.fill((0, 0, 0))
 
-    screen.blit(rotated_cookie, cookie_rect)
+    bullets.draw(screen)
+    cookies.draw(screen)
     screen.blit(player_img, (x, y))
+    # for cookie in cookies:
+    #     pygame.draw.rect(screen, (255, 0, 0), cookie.rect, 2)
+    # for bullet in bullets:
+    #     pygame.draw.rect(screen, (0, 255, 0), bullet.rect, 2)
 
     pygame.display.update()
 
