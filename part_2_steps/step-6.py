@@ -120,8 +120,8 @@ while running:
     if randint(0, int(spawn_rate)) == 0:
         Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
         
-    cookies.update()
     bullets.update()
+    cookies.update()
     player.update()
     pygame.sprite.groupcollide(bullets, cookies, True, True)
 

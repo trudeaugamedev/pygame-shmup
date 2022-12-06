@@ -115,8 +115,8 @@ while running:
             if event.key == K_SPACE:
                 Bullet(player.rect.centerx, player.y)
 
-    cookies.update()
     bullets.update()
+    cookies.update()
     player.update()
     pygame.sprite.groupcollide(bullets, cookies, True, True)
 

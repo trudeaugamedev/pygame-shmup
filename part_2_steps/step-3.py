@@ -88,8 +88,8 @@ while running:
     if keys[K_RIGHT]:
         x += 4
 
-    cookies.update()
     bullets.update()
+    cookies.update()
 
     screen.blit(bg_img, (0, 0))
 

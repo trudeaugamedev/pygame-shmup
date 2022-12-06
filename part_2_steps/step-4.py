@@ -110,8 +110,8 @@ while running:
             if event.key == K_SPACE:
                 Bullet(player.rect.centerx, player.y)
 
-    cookies.update()
     bullets.update()
+    cookies.update()
     player.update()
 
     screen.blit(bg_img, (0, 0))

@@ -133,8 +133,8 @@ while running:
         # and also give it a randomized direction by passing in a random velocity
         Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
 
-    cookies.update()    # Update all cookies
     bullets.update()    # Update all bullets
+    cookies.update()    # Update all cookies
     player.update()     # Update the player
     # The "groupcollide" function detects collision between two sprite groups
     # This function takes two groups between which you want to test for collision
