@@ -97,8 +97,8 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
-cookies = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
+cookies = pygame.sprite.Group()
 player = Player()
 
 spawn_rate = 60

@@ -64,8 +64,8 @@ class Bullet(pygame.sprite.Sprite):
 x = 180
 y = 340
 
-cookies = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
+cookies = pygame.sprite.Group()
 
 Cookie(0, 0, 5, 2)
 Cookie(100, 50, 3, 5)

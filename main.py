@@ -107,8 +107,8 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0:    # If the bottom side of the bullet goes above the top of the screen
             self.kill()             # Remove the bullet, .kill() will remove the sprite from all groups, which will essentially delete it
 
-cookies = pygame.sprite.Group() # Create a pygame group for cookies
 bullets = pygame.sprite.Group() # Create a pygame group for bullets
+cookies = pygame.sprite.Group() # Create a pygame group for cookies
 player = Player()               # Create the player
 
 spawn_rate = 60 # Extra: the original spawn rate of the cookies (the higher the number, the slower the spawning)
