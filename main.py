@@ -39,11 +39,11 @@ class Player(pygame.sprite.Sprite): # Make the player have stuff that a pygame s
         self.rect.y = self.y
 
         if self.rect.left < 0:                  # Restrict the player's left to inside the screen
-            self.x = 0
-            self.rect.x = self.x                # Re-update the rect after we do so
+            self.rect.left = 0
+            self.x = self.rect.x                # Re-update the rect after we do so
         elif self.rect.right > WIDTH:           # Restrict the player's right to inside the screen
-            self.x = WIDTH - self.rect.width
-            self.rect.x = self.x                # Re-update the rect after we do so
+            self.rect.right = WIDTH
+            self.x = self.rect.x                # Re-update the rect after we do so
 
         # "spritecollide" detects collision between a sprite and sprites in a group
         # This function takes a sprite: "self" (the player)

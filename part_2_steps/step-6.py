@@ -41,11 +41,11 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.rect.left < 0:
-            self.x = 0
-            self.rect.x = self.x
+            self.rect.left = 0
+            self.x = self.rect.x
         elif self.rect.right > WIDTH:
-            self.x = WIDTH - self.rect.width
-            self.rect.x = self.x
+            self.rect.right = WIDTH
+            self.x = self.rect.x
 
         if pygame.sprite.spritecollide(self, cookies, False, pygame.sprite.collide_rect_ratio(0.8)):
             pygame.quit()
