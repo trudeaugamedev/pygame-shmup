@@ -123,7 +123,7 @@ while running:
         # We are using this type of key press detection because this only detects when the key is pressed down, instead of continuously
         if event.type == KEYDOWN:       # If a key is pressed
             if event.key == K_SPACE:    # If the key is space
-                Bullet(player.x + player_img.get_width() / 2, player.y - 10)    # Spawn a bullet at the correct position relative to the player
+                Bullet(player.rect.centerx, player.y - 10)  # Spawn a bullet at the correct position relative to the player
 
     spawn_rate -= 0.01  # Decrease the spawn rate number, thus increasing the actual spawn rate
     if spawn_rate < 20: # If the spawn rate gets lower than 20

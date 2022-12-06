@@ -108,7 +108,7 @@ while running:
             running = False
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
-                Bullet(player.x + player_img.get_width() / 2, player.y - 10)
+                Bullet(player.rect.centerx, player.y - 10)
 
     cookies.update()
     bullets.update()
