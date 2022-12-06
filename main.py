@@ -1,5 +1,3 @@
-"""Separate collision rect"""
-
 import sys
 import pygame
 from pygame.locals import *
@@ -70,8 +68,8 @@ class Cookie(pygame.sprite.Sprite):
         self.x += self.x_vel    # Add the x velocity to the x position
         self.y += self.y_vel    # Add the y velocity to the y position
 
-        self.rect.centerx = self.x      # Set the center x position of the rect to draw the image at to be x
-        self.rect.centery = self.y      # Set the center y position of the rect to draw the image at to be y
+        self.rect.x = self.x      # Set the x position of the rect to draw the image at to be x
+        self.rect.y = self.y      # Set the y position of the rect to draw the image at to be y
 
         if self.rect.left < 0 or self.rect.right > WIDTH:   # If the left or right side of the rect is outside the window
             self.x_vel = -self.x_vel                        # Reverse the x velocity (bounce)
