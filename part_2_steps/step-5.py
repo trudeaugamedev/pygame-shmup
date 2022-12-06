@@ -113,7 +113,7 @@ while running:
             running = False
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
-                Bullet(player.rect.centerx, player.y - 10)
+                Bullet(player.rect.centerx, player.y)
 
     cookies.update()
     bullets.update()

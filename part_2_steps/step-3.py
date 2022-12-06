@@ -80,7 +80,7 @@ while running:
             running = False
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
-                Bullet(x + player_img.get_width() / 2, y - 10)
+                Bullet(x + player_img.get_width() / 2, y)
 
     keys = pygame.key.get_pressed()
     if keys[K_LEFT]:

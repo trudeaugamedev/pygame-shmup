@@ -112,7 +112,7 @@ while running:
             running = False
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
-                Bullet(player.rect.centerx, player.y - 10)
+                Bullet(player.rect.centerx, player.y)
 
     spawn_rate -= 0.01
     if spawn_rate < 20:
