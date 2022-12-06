@@ -56,7 +56,7 @@ class Bullet(pygame.sprite.Sprite):
         self.y -= 10
 
         self.rect.centerx = self.x
-        self.rect.y = self.y
+        self.rect.centery = self.y
 
         if self.rect.bottom < 0:
             self.kill()

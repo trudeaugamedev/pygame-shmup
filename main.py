@@ -100,9 +100,9 @@ class Bullet(pygame.sprite.Sprite):
     def update(self):
         self.y -= 10                # Constantly move the bullet up
 
-        # Update the center x position of the bullet, we are using "center" here so that it's easier to align the bullet with the player
+        # Update the center x and y position of the bullet, we are using "center" here so that it's easier to align the bullet with the player
         self.rect.centerx = self.x
-        self.rect.y = self.y    # Update the y position of the bullet
+        self.rect.centery = self.y
 
         if self.rect.bottom < 0:    # If the bottom side of the bullet goes above the top of the screen
             self.kill()             # Remove the bullet, .kill() will remove the sprite from all groups, which will essentially delete it
