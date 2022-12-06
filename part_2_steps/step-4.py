@@ -16,7 +16,7 @@ player_img = pygame.transform.scale(player_img, (36, 56))
 cookie_img = pygame.image.load("cookie.png").convert_alpha()
 bullet_img = pygame.image.load("bullet.png").convert_alpha()
 bullet_img = pygame.transform.scale(bullet_img, (12, 28))
-bg_img = pygame.image.load("background.png").convert() # We don't need the background to be transparent, so we use "convert"
+bg_img = pygame.image.load("background.png").convert()
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):

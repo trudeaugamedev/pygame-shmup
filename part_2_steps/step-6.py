@@ -14,10 +14,10 @@ pygame.display.set_caption("SHMUP!")
 clock = pygame.time.Clock()
 
 player_img = pygame.image.load("player.png").convert_alpha()
-player_img = pygame.transform.scale_by(player_img, 4)
+player_img = pygame.transform.scale(player_img, (36, 56))
 cookie_img = pygame.image.load("cookie.png").convert_alpha()
 bullet_img = pygame.image.load("bullet.png").convert_alpha()
-bullet_img = pygame.transform.scale_by(bullet_img, 4)
+bullet_img = pygame.transform.scale(bullet_img, (12, 28))
 bg_img = pygame.image.load("background.png").convert()
 
 class Player(pygame.sprite.Sprite):
