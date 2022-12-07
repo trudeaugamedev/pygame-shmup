@@ -3,7 +3,7 @@
 import sys
 import pygame
 from pygame.locals import *
-from random import randint
+from random import randint, random
 
 FPS = 60
 WIDTH, HEIGHT = 400, 400
@@ -101,7 +101,7 @@ bullets = pygame.sprite.Group()
 cookies = pygame.sprite.Group()
 player = Player()
 
-spawn_rate = 60
+spawn_chance = 1 / 100 # 1%
 
 running = True
 while running:
@@ -114,12 +114,12 @@ while running:
             if event.key == K_SPACE:
                 Bullet(player.rect.centerx, player.y)
 
-    spawn_rate -= 0.01
-    if spawn_rate < 20:
-        spawn_rate = 20
-    if randint(0, int(spawn_rate)) == 0:
+    spawn_chance += 0.002 / 100 # 0.002%
+    if spawn_chance > 5 / 100: # 5%
+        spawn_chance = 5 / 100 # 5%
+    if random() < spawn_chance:
         Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
-        
+
     bullets.update()
     cookies.update()
     player.update()

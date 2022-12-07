@@ -1,7 +1,7 @@
 import sys  # Import the system module, literally just for quitting the game cleanly
 import pygame
 from pygame.locals import *
-from random import randint  # Import randint from random, which generates a random number between two numbers
+from random import randint, random  # Import random functions from the random module
 
 FPS = 60
 WIDTH, HEIGHT = 400, 400
@@ -111,7 +111,7 @@ bullets = pygame.sprite.Group() # Create a pygame group for bullets
 cookies = pygame.sprite.Group() # Create a pygame group for cookies
 player = Player()               # Create the player
 
-spawn_rate = 60 # Extra: the original spawn rate of the cookies (the higher the number, the slower the spawning)
+spawn_chance = 1 / 100 # Extra: the percentage chance a cookie spawns every frame (starting at 1%)
 
 running = True
 while running:
@@ -125,10 +125,10 @@ while running:
             if event.key == K_SPACE:    # If the key is space
                 Bullet(player.rect.centerx, player.y)  # Spawn a bullet at the correct position relative to the player
 
-    spawn_rate -= 0.01  # Decrease the spawn rate number, thus increasing the actual spawn rate
-    if spawn_rate < 20: # If the spawn rate gets lower than 20
-        spawn_rate = 20 # stop it from getting lower (or else do you still want to play?!)
-    if randint(0, int(spawn_rate)) == 0:    # A random chance of spawning a cookie on a given frame, the higher the spawn rate, the lower the chance
+    spawn_chance += 0.002 / 100 # Increase the spawn chance by 0.002% per frame
+    if spawn_chance > 5 / 100:  # If the spawn chance is greater than 5%
+        spawn_chance = 5 / 100  # Cap it at 5% (if you want the game to be playable ;))
+    if random() < spawn_chance: # If the random percentage generated is less than the spawn chance percentage
         # Spawn the cookie at roughly the top half of the screen
         # and also give it a randomized direction by passing in a random velocity
         Cookie(randint(50, WIDTH - 50), randint(50, 100), randint(-5, 5), randint(-5, 5))
