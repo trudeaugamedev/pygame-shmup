@@ -1,3 +1,5 @@
+"""Proper bullet animation"""
+
 import sys
 import time
 import pygame

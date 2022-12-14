@@ -12,28 +12,44 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("SHMUP!")
 clock = pygame.time.Clock()
 
-player_img = pygame.image.load("player.png").convert_alpha()
-player_img = pygame.transform.scale(player_img, (36, 56))
+player_spritesheet = pygame.image.load("player.png").convert_alpha()
+player_imgs = []
+for x in range(4):
+    player_img = player_spritesheet.subsurface(x * 9, 0, 9, 14)
+    player_img = pygame.transform.scale(player_img, (36, 56))
+    player_imgs.append(player_img)
+
 cookie_img = pygame.image.load("cookie.png").convert_alpha()
+
 bullet_spritesheet = pygame.image.load("bullet.png").convert_alpha()
 bullet_imgs = []
 for x in range(4):
     bullet_img = bullet_spritesheet.subsurface(x * 3, 0, 3, 7)
     bullet_img = pygame.transform.scale(bullet_img, (12, 28))
     bullet_imgs.append(bullet_img)
+
 bg_img = pygame.image.load("background.png").convert()
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        self.image = player_img
+        self.image = player_imgs[0]
+        self.index = 0
+        self.animation_time = time.time()
         self.rect = player_img.get_rect()
 
         self.x = 180
         self.y = 340
 
     def update(self):
+        self.image = player_imgs[self.index]
+        if time.time() - self.animation_time > 0.1:
+            self.animation_time = time.time()
+            self.index += 1
+            if self.index == 4:
+                self.index = 0
+
         keys = pygame.key.get_pressed()
         if keys[K_LEFT]:
             self.x -= 4
