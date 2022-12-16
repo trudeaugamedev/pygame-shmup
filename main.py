@@ -14,8 +14,8 @@ clock = pygame.time.Clock()
 
 player_spritesheet = pygame.image.load("player.png").convert_alpha()
 player_imgs = []
-for x in range(4):
-    player_img = player_spritesheet.subsurface(x * 9, 0, 9, 14)
+for frame in range(4):
+    player_img = player_spritesheet.subsurface(frame * 9, 0, 9, 14)
     player_img = pygame.transform.scale(player_img, (36, 56))
     player_imgs.append(player_img)
 
@@ -23,8 +23,8 @@ cookie_img = pygame.image.load("cookie.png").convert_alpha()
 
 bullet_spritesheet = pygame.image.load("bullet.png").convert_alpha()
 bullet_imgs = []
-for x in range(4):
-    bullet_img = bullet_spritesheet.subsurface(x * 3, 0, 3, 7)
+for frame in range(4):
+    bullet_img = bullet_spritesheet.subsurface(frame * 3, 0, 3, 7)
     bullet_img = pygame.transform.scale(bullet_img, (12, 28))
     bullet_imgs.append(bullet_img)
 
@@ -35,20 +35,20 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         self.image = player_imgs[0]
-        self.index = 0
-        self.animation_time = time.time()
+        self.frame = 0
+        self.frame_time = time.time()
         self.rect = player_img.get_rect()
 
         self.x = 180
         self.y = 340
 
     def update(self):
-        self.image = player_imgs[self.index]
-        if time.time() - self.animation_time > 0.1:
-            self.animation_time = time.time()
-            self.index += 1
-            if self.index == 4:
-                self.index = 0
+        self.image = player_imgs[self.frame]
+        if time.time() - self.frame_time > 0.1:
+            self.frame_time = time.time()
+            self.frame += 1
+            if self.frame == 4:
+                self.frame = 0
 
         keys = pygame.key.get_pressed()
         if keys[K_LEFT]:
@@ -101,20 +101,20 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__(bullets)
 
         self.image = bullet_imgs[0]
-        self.index = 0
-        self.animation_time = time.time()
+        self.frame = 0
+        self.frame_time = time.time()
         self.rect = self.image.get_rect()
 
         self.x = x
         self.y = y
 
     def update(self):
-        self.image = bullet_imgs[self.index]
-        if time.time() - self.animation_time > 0.1:
-            self.animation_time = time.time()
-            self.index += 1
-            if self.index == 4:
-                self.index = 0
+        self.image = bullet_imgs[self.frame]
+        if time.time() - self.frame_time > 0.1:
+            self.frame_time = time.time()
+            self.frame += 1
+            if self.frame == 4:
+                self.frame = 0
 
         self.y -= 10
 
